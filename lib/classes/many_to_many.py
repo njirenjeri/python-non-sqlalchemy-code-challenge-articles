@@ -1,6 +1,6 @@
 class Article:
 
-    all_articles = []
+    all = []
 
     def __init__(self, author, magazine, title):
 
@@ -14,8 +14,8 @@ class Article:
 
         self.author = author
         self.magazine = magazine
-        self._title = title
-        Article.all_articles.append(self)
+        self.title = title
+        Article.all.append(self)
 
         @property
         def title(self):
@@ -56,7 +56,7 @@ class Author:
             return self.name
 
     def articles(self):
-        return [article for article in Article.all_articles if article.author == self]
+        return [article for article in Article.all if article.author == self]
 
     def magazines(self):
         return list(set(article.magazine for article in self.articles()))
@@ -106,7 +106,7 @@ class Magazine:
 
 
     def articles(self):
-        return [article for article in Article.all_articles if article.magazine == self]
+        return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
         return list(set(article.author for article in self.articles()))
@@ -122,6 +122,6 @@ class Magazine:
     
     @classmethod
     def top_publisher(cls):
-        if not Article.all_articles:
+        if not Article.all:
             return None
         return max(cls.all_magazines, key = lambda mag: len(mag.articles()))
